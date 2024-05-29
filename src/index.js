@@ -1,8 +1,8 @@
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
-const score =document.querySelector("#score");
-const timerDisplay = document.querySelector("#timer");
+const score = document.querySelector('#score');
+const timerDisplay= document.querySelector('#timer');
 
 let time = 0;
 let timer;
@@ -144,7 +144,8 @@ function showAndHide(hole, delay){
 *
 */
 function toggleVisibility(hole){
-  return hole.classList.toggle('show');
+  hole.classList.toggle('show');
+  return hole;
 }
 
 /**
@@ -158,7 +159,7 @@ function toggleVisibility(hole){
 *
 */
 function updateScore() {
-  points += 1;
+  points++;
   score.textContent = points;
   return points;
 }
@@ -219,7 +220,9 @@ function whack(event) {
 * for an example on how to set event listeners using a for loop.
 */
 function setEventListeners(){
-  moles.forEach(mole => mole.addEventListener('click', whack));
+  moles.forEach(
+      mole => mole.addEventListener('click', whack)
+  );
   return moles;
 }
 
@@ -254,6 +257,9 @@ function stopGame(){
 */
 function startGame(){
   setDuration(10);
+  clearScore()
+  startTimer();
+  setEventListeners()
   showUp();
   return "game started";
 }
