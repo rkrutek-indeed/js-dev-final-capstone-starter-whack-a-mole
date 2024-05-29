@@ -65,16 +65,13 @@ function setDelay(difficulty) {
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
 function chooseHole(holes) {
-  const holesArray = [...holes];
-  const randomIndex = 0;
-  while (true) {
-    const randomIndex = randomInteger(0, holesArray.length - 1);
-    if (randomIndex !== lastHole) {
-      lastHole = randomIndex;
-      break;
-    }
+  const index = Math.floor(Math.random() * holes.length);
+  const hole = holes[index];
+  if (hole === lastHole) {
+    return chooseHole(holes);
   }
-  return holesArray[randomIndex]
+  lastHole = hole;
+  return hole;
 }
 
 /**
@@ -115,8 +112,8 @@ function gameOver() {
 *
 */
 function showUp() {
-  let delay = setDelay(difficulty)
-  const hole = chooseHole(holes)
+  let delay = setDelay(difficulty);
+  const hole = chooseHole(holes);
   return showAndHide(hole, delay);
 }
 
@@ -130,11 +127,10 @@ function showUp() {
 */
 function showAndHide(hole, delay){
   toggleVisibility(hole);
-  const timeoutID = setTimeout(() => {
+  return setTimeout(() => {
     toggleVisibility(hole);
     gameOver();
   }, delay);
-  return timeoutID;
 }
 
 /**
@@ -256,10 +252,10 @@ function stopGame(){
 *
 */
 function startGame(){
+  setEventListeners();
   setDuration(10);
-  clearScore()
+  clearScore();
   startTimer();
-  setEventListeners()
   showUp();
   return "game started";
 }
