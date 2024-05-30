@@ -286,6 +286,8 @@ function stopGame(){
 *
 */
 function startGame(){
+  setEventListeners();
+  setRadioBtnEventListeners()
   setDuration(10);
   clearScore();
   startTimer();
@@ -293,8 +295,6 @@ function startGame(){
   return "game started";
 }
 
-setEventListeners();
-setRadioBtnEventListeners()
 startButton.addEventListener("click", startGame);
 
 
