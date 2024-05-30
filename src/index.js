@@ -3,12 +3,14 @@ const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 const score = document.querySelector('#score');
 const timerDisplay= document.querySelector('#timer');
+const radioButtons = document.querySelectorAll('input[name="difficulty"]');
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+let difficulty = "easy";
+let pointMultiplier = 1;
 
 /**
  * Generates a random integer within a range.
@@ -156,7 +158,7 @@ function toggleVisibility(hole){
 *
 */
 function updateScore() {
-  points++;
+  points += pointMultiplier;
   score.textContent = points;
   return points;
 }
@@ -224,6 +226,37 @@ function setEventListeners(){
 }
 
 /**
+ *
+ * Adds the 'change' event listeners to the difficulty radio buttons.
+ */
+function setRadioBtnEventListeners(){
+  radioButtons.forEach(radioButton => {
+    radioButton.addEventListener('change', () => {
+      // Get the selected value
+      difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+      setPointMultiplier(difficulty);
+    });
+  });
+}
+
+/**
+ *
+ * This function sets the pointMultiplier.
+ * The pointMultiplier is used to increase worth of points based on difficulty.
+ *
+ */
+function setPointMultiplier(difficulty) {
+  if (difficulty === 'easy') {
+      pointMultiplier = 1;
+  } else if (difficulty === 'medium') {
+      pointMultiplier = 2;
+  } else {
+      pointMultiplier = 4;
+  }
+}
+
+
+/**
 *
 * This function sets the duration of the game. The time limit, in seconds,
 * that a player has to click on the sprites.
@@ -253,7 +286,6 @@ function stopGame(){
 *
 */
 function startGame(){
-  setEventListeners();
   setDuration(10);
   clearScore();
   startTimer();
@@ -261,6 +293,8 @@ function startGame(){
   return "game started";
 }
 
+setEventListeners();
+setRadioBtnEventListeners()
 startButton.addEventListener("click", startGame);
 
 

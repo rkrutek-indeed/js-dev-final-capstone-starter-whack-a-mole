@@ -26,8 +26,19 @@ h2 {
 }
 
 #start {
-    text-align: center;
-    font-size: 30px;
+  text-align: center;
+  font-size: 30px;
+}
+
+#difficulty-section {
+  text-align: center;
+  font-size: 30px;
+}
+
+#difficulty-section label {
+  color: white;
+  -webkit-text-stroke: 1px black;
+  font-weight: bold;
 }
 
 #timer{
