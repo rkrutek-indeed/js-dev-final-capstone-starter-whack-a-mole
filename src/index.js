@@ -303,7 +303,7 @@ function stopGame(){
 */
 function startGame(){
   loopAudio(song);
-  toggleStartButtonDisable();
+  toggleMenuControlsDisable();
   setEventListeners();
   setRadioBtnEventListeners()
   setDuration(10);
@@ -316,9 +316,11 @@ function startGame(){
 /**
  * This function is used to disable/enable start button.
  */
-const toggleStartButtonDisable = () => {
+const toggleMenuControlsDisable = () => {
   startButton.disabled = !startButton.disabled;
-}
+  radioButtons.forEach(radioButton => {
+    radioButton.disabled = startButton.disabled;
+  });}
 
 function playAudio(audioObject) {
   audioObject.play();
