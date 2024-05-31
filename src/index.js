@@ -4,6 +4,8 @@ const startButton = document.querySelector('#start');
 const score = document.querySelector('#score');
 const timerDisplay= document.querySelector('#timer');
 const radioButtons = document.querySelectorAll('input[name="difficulty"]');
+const audioHit = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/hit.mp3?raw=true");
+const song = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/molesong.mp3?raw=true");
 
 let time = 0;
 let timer;
@@ -11,7 +13,11 @@ let lastHole = 0;
 let points = 0;
 let difficulty = "easy";
 let cyberMoleProbability = 0.1;
-let pointMultiplier = 1;
+let pointsDifficultyMultiplier = 1;
+let molePoints = 1;
+const STANDARD_MOLE_POINTS = 1;
+const CYBER_MOLE_POINTS = 3;
+
 
 /**
  * Generates a random integer within a range.
@@ -148,6 +154,8 @@ function toggleVisibility(hole) {
 
   const isCybermole = Math.random() <= cyberMoleProbability;
   const mole = hole.querySelector('.mole');
+
+  molePoints = isCybermole ? CYBER_MOLE_POINTS : STANDARD_MOLE_POINTS;
   mole.classList.toggle('cybermole', isCybermole);
 
   return hole;
@@ -164,7 +172,7 @@ function toggleVisibility(hole) {
 *
 */
 function updateScore() {
-  points += pointMultiplier;
+  points += (molePoints * pointsDifficultyMultiplier);
   score.textContent = points;
   return points;
 }
@@ -216,6 +224,7 @@ function startTimer() {
 */
 function whack(event) {
   updateScore();
+  playAudio(audioHit)
   return points;
 }
 
@@ -253,11 +262,11 @@ function setRadioBtnEventListeners(){
  */
 function setPointMultiplier(difficulty) {
   if (difficulty === 'easy') {
-      pointMultiplier = 1;
+      pointsDifficultyMultiplier = 1;
   } else if (difficulty === 'medium') {
-      pointMultiplier = 2;
+      pointsDifficultyMultiplier = 2;
   } else {
-      pointMultiplier = 4;
+      pointsDifficultyMultiplier = 4;
   }
 }
 
@@ -293,6 +302,7 @@ function stopGame(){
 *
 */
 function startGame(){
+  loopAudio(song);
   toggleStartButtonDisable();
   setEventListeners();
   setRadioBtnEventListeners()
@@ -308,6 +318,15 @@ function startGame(){
  */
 const toggleStartButtonDisable = () => {
   startButton.disabled = !startButton.disabled;
+}
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
 }
 
 startButton.addEventListener("click", startGame);
