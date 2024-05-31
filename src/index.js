@@ -10,6 +10,7 @@ let timer;
 let lastHole = 0;
 let points = 0;
 let difficulty = "easy";
+let cyberMoleProbability = 0.1;
 let pointMultiplier = 1;
 
 /**
@@ -142,8 +143,13 @@ function showAndHide(hole, delay){
 * a given hole. It returns the hole.
 *
 */
-function toggleVisibility(hole){
+function toggleVisibility(hole) {
   hole.classList.toggle('show');
+
+  const isCybermole = Math.random() <= cyberMoleProbability;
+  const mole = hole.querySelector('.mole');
+  mole.classList.toggle('cybermole', isCybermole);
+
   return hole;
 }
 
