@@ -291,7 +291,7 @@ function setDuration(duration) {
 function stopGame(){
   // stopAudio(song);  //optional
   clearInterval(timer);
-  toggleStartButtonDisable()
+  toggleMenuControlsDisable()
   return "game stopped";
 }
 
