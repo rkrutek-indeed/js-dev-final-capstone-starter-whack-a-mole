@@ -276,6 +276,7 @@ function setDuration(duration) {
 function stopGame(){
   // stopAudio(song);  //optional
   clearInterval(timer);
+  toggleStartButtonDisable()
   return "game stopped";
 }
 
@@ -286,6 +287,7 @@ function stopGame(){
 *
 */
 function startGame(){
+  toggleStartButtonDisable();
   setEventListeners();
   setRadioBtnEventListeners()
   setDuration(10);
@@ -293,6 +295,13 @@ function startGame(){
   startTimer();
   showUp();
   return "game started";
+}
+
+/**
+ * This function is used to disable/enable start button.
+ */
+const toggleStartButtonDisable = () => {
+  startButton.disabled = !startButton.disabled;
 }
 
 startButton.addEventListener("click", startGame);
